@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,7 @@ namespace TelePSocial.Entidades
         public int CantiLikes { get; set; }
         [NotMapped]
         public bool CanLike { get; set; }
+        [NotMapped]
+        public List<CommentUsers> Comentarios { get; set; } 
     }
 }

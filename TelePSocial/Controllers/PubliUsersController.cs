@@ -53,6 +53,25 @@ namespace TelePSocial.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
+        public async Task<IActionResult> Comentar(int idd)
+        {
+            ViewBag.Id = idd;
+
+            return PartialView();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Comentar(CommentUsers model)
+        {
+            var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
+            model.IdUser = usuario.UserName;
+            model.DesComment = model.DesComment;
+            model.idPubliUsers = model.idPubliUsers;
+            model.FecComment = DateTime.Now.Date;
+            model.HorComment = DateTime.Now.TimeOfDay;
+            _context.Add(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 }

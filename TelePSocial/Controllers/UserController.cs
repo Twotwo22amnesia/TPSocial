@@ -33,6 +33,29 @@ namespace TelePSocial.Controllers
         {
             var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
             var list = await _context.PubliUsers.Where(z => z.IdUser.Equals(usuario.UserName)).ToListAsync();
+            foreach (var item in list)
+            {
+                item.CantiLikes = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers)).CountAsync();
+                var canlike = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers) && z.IdUser.Equals(usuario.UserName)).CountAsync();
+                item.Comentarios = await _context.CommentUsers.Where(z => z.idPubliUsers.Equals(item.idPubliUsers)).ToListAsync();
+                foreach(var items in item.Comentarios)
+                {
+                    var usuarioComent = await _userManager.FindByNameAsync(items.IdUser);
+                    items.username = usuarioComent.UserName;
+                    items.usuario = usuarioComent.Nombre_Usuario;
+                    items.desPhoto = usuarioComent.DesImage;
+                    items.photo = usuarioComent.PhotoPerfil;
+
+                }
+                if (canlike.Equals(1))
+                {
+                    item.CanLike = false;
+                }
+                else
+                {
+                    item.CanLike = true;
+                }
+            }
             ViewBag.ListPub = list;
             return View(usuario);
         }

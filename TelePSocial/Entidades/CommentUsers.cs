@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TelePSocial.Entidades
 {
@@ -14,5 +15,13 @@ namespace TelePSocial.Entidades
         public DateTime FecComment { get; set; }
         public TimeSpan HorComment { get; set; }
         public string DesComment { get; set; }
+        [NotMapped]
+        public string usuario { get; set; }
+        [NotMapped]
+        public string username { get; set; }
+        [NotMapped]
+        public string desPhoto { get; set; }
+        [NotMapped]
+        public string photo { get; set; }
     }
 }

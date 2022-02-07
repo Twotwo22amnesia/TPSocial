@@ -29,6 +29,26 @@
                                 <h5 class="card-title">Special title treatment</h5>
                                 <p class="card-text">@item.DesPublic .</p>
                             </div>
+                            <section>
+                                <hr>
+                                    <ul class="list-unstyled">
+                                      @foreach(var items in item.Comentarios){
+                                        <li class="media" style="background: #F5F7FA;">
+                                            @if (!string.IsNullOrEmpty(items.photo))
+                                            {
+                                                <a asp-action="verPerfil" asp-controller="User" ><img class="mr-3" src=@Url.Content(items.desPhoto)  width="30" height="30"  alt="Generic placeholder image"></a> 
+                
+                                            }else{
+                                                <a asp-action="verPerfil" asp-controller="User" ><img class="mr-3" src="~/images/Feed/usernot.jpg"  width="30" height="30"  alt="Generic placeholder image"></a> 
+                                            } 
+                                            <div class="media-body">
+                                                <h5 class="mt-0 mb-1">@items.usuario</h5>
+                                                @items.DesComment
+                                            </div>
+                                        </li>   
+                                        } 
+                                    </ul>
+                                </section>
                             <div class="card-footer text-muted">
                                 <a class="btn btn-link">@item.CantiLikes me gustas</a>
                                 @if (item.CanLike)
@@ -36,6 +56,8 @@
                                     <a asp-action="LikePubli" asp-controller="PubliUsers" asp-route-idd="@item.idPubliUsers" class="btn btn-link ">Like it</a>
                                 }
                                 @item.FecPublic.ToString().Substring(0,10) @item.HorPublic.ToString().Substring(0,5) 
+                                    <a asp-action="Comentar" asp-controller="PubliUsers" asp-route-idd="@item.idPubliUsers" class="btn btn-default addComen-dialog-window ">Añadir Comentario</a>
+
                             </div>
                         </div>
                     }
@@ -88,6 +110,23 @@
     </div>
   </div>
 </div>
+<div class="modal" id="AddComen" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear publicación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+          <div class="teeeeComen"></div>
+      </div>
+      <div class="modal-footer"> 
+      </div>
+    </div>
+  </div>
+</div>
 @section scripts{
 
 <script>
@@ -105,5 +144,20 @@
                 }).success(function () { $('input:text:visible:first').focus(); });
             }
         });
+        $("body").on("click", "a.addComen-dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#AddComen').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#AddComen .teeeeComen').html(data);
+                    $('#AddComen').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+            }
+        });
+        
 </script>
 }
