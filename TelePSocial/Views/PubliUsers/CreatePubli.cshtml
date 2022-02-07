@@ -1,0 +1,32 @@
+﻿@model TelePSocial.Entidades.PubliUsers
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <div class="ibox-content">
+        <div class="row">
+            <form asp-action="CreatePubli">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col col-sm-12">
+                    <div class="form-group">
+                        <div class="input text">
+                            <label  class="control-label"></label>
+                            <textarea asp-for="DesPublic" class="form-control" required ></textarea>
+                            <span asp-validation-for="DesPublic" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>    
+                <br />
+                <div class="col col-sm-12 text-right">
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

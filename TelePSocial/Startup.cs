@@ -26,7 +26,7 @@ namespace TelePSocial
         public void ConfigureServices(IServiceCollection services)
         {
             //Cadena de conexión
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConection")));
+            services.AddDbContext<TelePSociaDblContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelePSociaDblContextConnection")));
             services.AddControllersWithViews();
             services.AddRazorPages();  
         }
@@ -51,6 +51,7 @@ namespace TelePSocial
 
             app.UseAuthorization();
             app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

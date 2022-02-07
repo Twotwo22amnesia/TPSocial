@@ -1,0 +1,171 @@
+﻿@model IEnumerable<TelePSocial.Entidades.LogSes>
+
+@{
+    ViewData["Title"] = "Index";
+    var titulo = "Sistemas";
+
+}
+
+
+<div class="mail-box">
+    <h2>@titulo</h2>
+    <hr />
+    <p>
+        <a asp-action="Create" class="btn btn-primary add-dialog-window">Nuevo Registro</a>
+    </p>
+    <br>
+    <div class="table-responsive table-sm table-hover">
+        <table id="example2" class="table table-hover table-mail">
+            <thead class="table-active">
+                <tr>
+                    <th>
+                        IdUser
+                    </th>   
+                    <th>
+                        FecLogeo
+                    </th>
+                    <th>
+                        HorLogeo
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FecLogeo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorLogeo)
+                    </td>  
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#17a2b8;color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Agregar Sistema</h2>
+            </div>
+            <div class="modal-body">
+                <div class="teeee">Please wait...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#17a2b8;color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Actualizar Sistema</h2>
+            </div>
+            <div class="modal-body">
+                <div class="teeee">Please wait...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#da2213;color:white;">
+                <button data-dismiss="modal" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h2 class="modal-title">Eliminar Sistema</h2>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h3>¿Estas seguro de eliminar el registro seleccionado?</h3>
+                </div>
+                <div id="response5" class="text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#example2').DataTable({
+                language: {
+                    search: "Buscar: ",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                    infoFiltered: "(filtrado de _MAX_ registros en total)",
+                    paginate: {
+                        first: "Primero",
+                        previous: "<<",
+                        next: ">>",
+                        last: "Último"
+                    }
+                },
+                "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, "All"]],
+                dom: 'Bfrtip',
+                stateSave: true,
+                buttons: [
+                    'excelHtml5',
+                    'pdfHtml5'
+                ]
+            });
+        });
+
+        $("body").on("click", "a.add-dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#Add').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#Add .teeee').html(data);
+                    $('#Add').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+            }
+        });
+
+
+        $("body").on("click", "a.edit-dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#Edit').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#Edit .teeee').html(data);
+                    $('#Edit').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+            }
+        });
+
+        $("body").on("click", "a.deleteprodu-dialog-window", null, function (e) {
+        var htmlContent = '<br /><button type="button" id="btnNo" class="btn btn-danger" style="background-color:#da2213;color:white;" data-dismiss="modal" aria-hidden="true">No</button>&nbsp&nbsp<a href="@Url.Action("Delete", "Sistemas")/' + $(this).data('id') + '" class="btn btn-default">Si</a>';
+        $("#response5").html(htmlContent);
+        $('#Delete').modal('show');
+     });
+
+
+    </script>
+}
