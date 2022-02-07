@@ -1,4 +1,148 @@
 ﻿@model TelePSocial.Areas.Identity.Data.ApplicationUser
      
 @{
+    var ListPublics = (List<TelePSocial.Entidades.PubliUsers>)ViewBag.ListPub;
+}  
+<div class="x_panel_body">
+    <div class="x_title"> 
+        <h3 style="color:#780096">@Model.Nombre_Usuario </h3> 
+        <div class="clearfix"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6  profile_left">
+            <div class="profile_img">
+            <div id="crop-avatar">
+                <!-- Current avatar -->
+                @if (!string.IsNullOrEmpty(Model.PhotoPerfil))
+            {
+                <a class="img-responsive avatar-view" asp-controller="User" asp-action="Index"><img id="PerfilImage" src=@Url.Content(Model.DesImage) style="width:100px;max-width: 100%; height: auto;" /></a>
+                
+            }else{
+                <a class="img-responsive avatar-view" asp-controller="User" asp-action="Index"><img id="PerfilImage" src="~/images/Feed/usernot.jpg"/></a>
+            } 
+            </div>
+            </div>
+            <h3>@Model.Nombre_Usuario</h3> 
+            <ul class="list-unstyled user_data"> 
+            @if(!string.IsNullOrEmpty(@Model.PhoneNumber))
+            {
+                <li>
+                    <i class="fa fa-phone "></i> @Model.PhoneNumber
+                </li>
+                
+            }
+            else{
+                <li>
+                    <i class="fa fa-phone "></i> Por Editar
+                </li> 
+            }   
+            <li class="m-top-xs">
+                <i class="fa fa-birthday-cake user-profile-icon"></i> @Model.BirthDay.ToString().Substring(0,10) 
+            </li>
+             <li class="m-top-xs">
+                <i class="fa fa-user user-profile-icon"></i> @Model.DesGender 
+            </li>
+            </ul> 
+            <a asp-action="EditUser" asp-controller="User" class="btn btn-success edit-dialog-window">Edit Profile</a>
+            <br />  
+        </div>
+        <div class="col-md-6 col-sm-6  profile_title">
+            <br />  
+             <div class="container">
+                @if(ListPublics.Count() != 0){
+                    @foreach(var item in ListPublics)
+                    {
+                        <div class="card text-left">
+                            <div class="card-header">
+                               <h7 >@Model.Nombre_Usuario</h7> <a asp-action="deletePublic" asp-route-idd="@item.idPubliUsers" class=" " style="float: right;" ><i class="fa fa-trash" style="color:#780096;"></i></a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">@item.DesPublic .</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                @item.FecPublic.ToString().Substring(0,10) @item.HorPublic.ToString().Substring(0,5) 
+                            </div>
+                        </div>
+                    }
+                } 
+            </div> 
+        </div> 
+    </div>
+    @*<hr />*@
+    <div class="row">
+        @*<form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserName" /> 
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" required />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div> 
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div> 
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="IsEnabled" class="control-label center-block"></label>
+                    <input asp-for="IsEnabled" class="form-control" />
+                    <span asp-validation-for="IsEnabled" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col col-sm-12 text-right">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </form>*@
+    </div>
+</div>
+
+<div class="modal" id="Edit" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Información</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+          <div class="teeeeEdit"></div>
+      </div>
+      <div class="modal-footer"> 
+      </div>
+    </div>
+  </div>
+</div>
+@section scripts{
+
+<script>
+        
+      $("body").on("click", "a.edit-dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#Edit').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#Edit .teeeeEdit').html(data);
+                    $('#Edit').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+            }
+        });
+
+
+</script>
 }

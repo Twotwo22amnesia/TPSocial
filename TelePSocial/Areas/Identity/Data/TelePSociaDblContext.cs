@@ -24,6 +24,8 @@ namespace TelePSocial.Data
             builder.Entity<ApplicationUser>().Ignore(c => c.LockoutEnd);
             builder.Entity<LogSes>().ToTable("LogSes");
             builder.Entity<PubliUsers>().ToTable("PubliUsers");
+            builder.Entity<LikesPublics>().ToTable("LikesPublics");
+            builder.Entity<CommentUsers>().ToTable("CommentUsers");
             
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
@@ -31,7 +33,10 @@ namespace TelePSocial.Data
         }
         public DbSet<LogSes> LogSes { get; set; }
         public DbSet<PubliUsers> PubliUsers { get; set; }
+        public DbSet<LikesPublics> LikesPublics { get; set; }
+        public DbSet<CommentUsers> CommentUsers { get; set; }
         
+
 
     }
 }

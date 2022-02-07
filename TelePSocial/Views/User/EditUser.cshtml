@@ -1,0 +1,97 @@
+﻿@model TelePSocial.Areas.Identity.Data.ApplicationUser
+
+@{
+}
+
+
+    <div class="ibox-content">
+        <div class="row">
+            <form asp-action="EditUser"  enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserName" /> 
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" required />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div> 
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="BirthDay"></label>
+                    <input asp-for="BirthDay" class="form-control" /> 
+                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="row"> 
+                        <div class="form-check  px-4 col-md-4 "> 
+                            <input asp-for="Gender" class="form-check-input" type="radio" name="Gender"  value="M" > 
+                            <label class="form-check-label" for="Input.Gender">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="form-check  px-4 col-md-4">  
+                            <input asp-for="Gender" class="form-check-input" type="radio" name="Gender"  value="F"> 
+                            <label class="form-check-label" for="Input.Gender">
+                                Femenino
+                            </label>
+                        </div>
+                        <div class="form-check  px-4 col-md-4">  
+                            <input asp-for="Gender" class="form-check-input" type="radio" name="Gender"  value="O"> 
+                            <label class="form-check-label" for="Input.Gender">
+                                Otros
+                            </label>
+                        </div>
+                    </div> 
+                    <span asp-validation-for=" Gender" class="text-danger"></span>
+                </div>
+            </div> 
+             <div class="col col-sm-12">
+                <label asp-for="PhotoPerfil" class="control-label"></label>
+                <div class="file-input-new">
+                    <div class="input-group">
+                        <div tabindex="500" class="form-control file-caption">
+                            <div class="file-caption-name" id="NombreArchivo">
+                                <label class="custom-file-label" for="customFile" id="archi">Archivo..</label>
+                            </div>
+                        </div>
+                        <div class="input-group-btn" style="height:auto">
+                            <div tabindex="500" class="btn btn-default btn-file">
+                                Adjuntar...
+                                <input  class="custom-file-input" id="files" asp-for="DOC_DOCUM" name="DOC_DOCUM" onchange="Myfunction1()"   />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="IsEnabled" class="control-label center-block"></label>
+                    <input asp-for="IsEnabled" class="form-control" />
+                    <span asp-validation-for="IsEnabled" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col col-sm-12 text-right">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+     
+<script>
+    function Myfunction1() {
+        var fileName = $("#files").val().split("\\").pop();
+        $('#archi').text(fileName);
+    }
+</script> 

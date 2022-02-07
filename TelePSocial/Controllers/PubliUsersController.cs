@@ -41,5 +41,18 @@ namespace TelePSocial.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home" );
         }
+        public async Task<IActionResult> LikePubli(int idd)
+        {
+            var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
+            var publi = await _context.PubliUsers.FindAsync(idd);
+            var likePubl = new LikesPublics{
+                idPubliUsers = idd,
+                IdUser = usuario.UserName
+            }; 
+            _context.Add(likePubl);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

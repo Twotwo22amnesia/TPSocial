@@ -40,7 +40,20 @@ namespace TelePSocial.Controllers
             ViewBag.nombre = user.Nombre_Usuario;
             ViewBag.photo = user.PhotoPerfil;
             ViewBag.DesImage = user.DesImage; 
-            var List = await _context.PubliUsers.Where(z => !z.IdUser.Equals(user.UserName)).ToListAsync();
+            var List = await _context.PubliUsers.Where(z => !z.IdUser.Equals(user.UserName)).OrderByDescending(z => z.FecPublic).ToListAsync();
+            foreach(var item in List)
+            {
+                item.CantiLikes = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers)).CountAsync();
+                var canlike = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers) && z.IdUser.Equals(user.UserName)).CountAsync();
+                if (canlike.Equals(1))
+                {
+                    item.CanLike = false;
+                }
+                else
+                {
+                    item.CanLike = true;
+                }
+            }
             return View(List);
         }
 

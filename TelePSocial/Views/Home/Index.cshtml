@@ -30,7 +30,11 @@
                                 <p class="card-text">@item.DesPublic .</p>
                             </div>
                             <div class="card-footer text-muted">
-                                <a asp-action="LikePubli" asp-controller="PubliUsers" class="btn btn-link ">Like it</a>
+                                <a class="btn btn-link">@item.CantiLikes me gustas</a>
+                                @if (item.CanLike)
+                                {
+                                    <a asp-action="LikePubli" asp-controller="PubliUsers" asp-route-idd="@item.idPubliUsers" class="btn btn-link ">Like it</a>
+                                }
                                 @item.FecPublic.ToString().Substring(0,10) @item.HorPublic.ToString().Substring(0,5) 
                             </div>
                         </div>
@@ -43,7 +47,7 @@
             <div  >
             @if (!string.IsNullOrEmpty(photo))
             {
-                <p>@user</p><a asp-controller="User" asp-action="Index"><img id="PerfilImage" src=@Url.Content(@DesImage)/></a>
+                <p>@user</p><a asp-controller="User" asp-action="Index"><img id="PerfilImage" src=@Url.Content(@DesImage) style="width:100px;max-width: 100%; height: auto;" /></a>
                 
             }else{
                 <p>@user</p><a asp-controller="User" asp-action="Index"><img id="PerfilImage" src="~/images/Feed/usernot.jpg"/></a>
@@ -79,9 +83,7 @@
       <div class="modal-body"> 
           <div class="teeee"></div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer"> 
       </div>
     </div>
   </div>

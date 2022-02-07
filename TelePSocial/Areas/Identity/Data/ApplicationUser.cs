@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace TelePSocial.Areas.Identity.Data
@@ -23,11 +24,11 @@ namespace TelePSocial.Areas.Identity.Data
                     return FirstName + " " + LastName; 
             }
         }   
-        [Display(Name = "Photo")]
+        [Display(Name = "Foto de perfil")]
         public string PhotoPerfil { get; set; }
         [NotMapped]
         [Display(Name = "Adjunto")]
-        public string DesImage { get { return string.Format("~/images/UsersPhotos/{0}", PhotoPerfil); } }
+        public string DesImage { get { return string.Format("~/images/Photos/{0}", PhotoPerfil); } }
         [PersonalData]
         [Display(Name = "Género")]
         public string Gender { get; set; }
@@ -63,6 +64,7 @@ namespace TelePSocial.Areas.Identity.Data
         [Display(Name = "Nombres")]
         [PersonalData]
         public string FirstName { get; set; }
-
+        [NotMapped]
+        public IFormFile DOC_DOCUM { get; set; }
     }
 }

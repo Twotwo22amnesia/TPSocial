@@ -9,12 +9,14 @@ namespace TelePSocial.Entidades
         [Key]
         public int idPubliUsers { get; set; }
         public string IdUser { get; set; }
-        public DateTime FecPublic { get; set; }
-        public TimeSpan HorPublic { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         [DataType(DataType.Date)] 
+        public DateTime FecPublic { get; set; }
+        public TimeSpan HorPublic { get; set; }
         public string DesPublic { get; set; }
         [NotMapped]
-        public string prop { get; set; }
+        public int CantiLikes { get; set; }
+        [NotMapped]
+        public bool CanLike { get; set; }
     }
 }
