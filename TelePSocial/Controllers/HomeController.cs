@@ -14,13 +14,13 @@ using TelePSocial.Models;
 
 namespace TelePSocial.Controllers
 {  
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly TelePSociaDblContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-
         public HomeController(ILogger<HomeController> logger,UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, TelePSociaDblContext context)
         {
@@ -32,10 +32,10 @@ namespace TelePSocial.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //if (!User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Login", "Account", new { area = "Identity" });
-            //}
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             ViewBag.nombre = user.Nombre_Usuario;
             ViewBag.photo = user.PhotoPerfil;
@@ -46,6 +46,8 @@ namespace TelePSocial.Controllers
                 item.CantiLikes = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers)).CountAsync();
                 var canlike = await _context.LikesPublics.Where(z => z.idPubliUsers.Equals(item.idPubliUsers) && z.IdUser.Equals(user.UserName)).CountAsync();
                 item.Comentarios = await _context.CommentUsers.Where(z => z.idPubliUsers.Equals(item.idPubliUsers)).ToListAsync();
+                item.userpubli = await _userManager.FindByNameAsync(item.IdUser);
+                 
                 foreach (var items in item.Comentarios)
                 {
                     var usuarioComent = await _userManager.FindByNameAsync(items.IdUser);

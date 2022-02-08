@@ -8,7 +8,7 @@
 
 <div id="background"></div>
 <div class="punto"></div>
-<div id="login" class="sombra_caja text-center animated fadeInDown">
+<div id="login" class="sombra_caja text-center animated fadeInDown ">
     <div class="login_interior">
         <p>
             <img src="~/images/login/TPLogo.PNG" width="90" height="90" />
@@ -17,7 +17,6 @@
         <form method="post"> 
             <div asp-validation-summary="All" class="text-danger"></div>
             @Html.ValidationMessage("CustomError")
-            <div style="display:none;"></div>
             <div class="form-group">
                 <input asp-for="Input.Email" class="form-control" placeholder="Usuario" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -33,7 +32,6 @@
             </div>
             <input class="btn btn-primary block full-width m-b" type="submit" value="Ingresar" style="border-color:#780096;background-color:#780096;color:white;" />
             <small style="position:relative; top:5px;">
-                <a id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a>
                 <br><br>
                 <p>
                     ¿Necesita ayuda? Escribanos a <a href="mailto:soporte@teleperformance.com.pe">soporte@teleperformance.com.pe</a> 

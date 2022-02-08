@@ -63,8 +63,7 @@ namespace TelePSocial.Controllers
         public async Task<IActionResult> Comentar(CommentUsers model)
         {
             var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
-            model.IdUser = usuario.UserName;
-            model.DesComment = model.DesComment;
+            model.IdUser = usuario.UserName; 
             model.idPubliUsers = model.idPubliUsers;
             model.FecComment = DateTime.Now.Date;
             model.HorComment = DateTime.Now.TimeOfDay;

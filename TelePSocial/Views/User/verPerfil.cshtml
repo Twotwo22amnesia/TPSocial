@@ -42,8 +42,7 @@
              <li class="m-top-xs">
                 <i class="fa fa-user user-profile-icon"></i> @Model.DesGender 
             </li>
-            </ul> 
-            <a asp-action="EditUser" asp-controller="User" class="btn btn-success edit-dialog-window">Edit Profile</a>
+            </ul>  
             <br />  
         </div>
         <div class="col-md-6 col-sm-6  profile_title">
@@ -53,8 +52,14 @@
                     @foreach(var item in ListPublics)
                     {
                         <div class="card text-left">
-                            <div class="card-header">
-                               <h7 >@Model.Nombre_Usuario</h7> <a asp-action="deletePublic" asp-route-idd="@item.idPubliUsers" class=" " style="float: right;" ><i class="fa fa-trash" style="color:#780096;"></i></a>
+                            <div class="card-header headerPubli"> 
+                               @if (!string.IsNullOrEmpty(item.userpubli.PhotoPerfil))
+                                {
+                                     <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@item.userpubli.UserName" ><img class="mr-3 rounded" src=@Url.Content(item.userpubli.DesImage)  width="45" height="45"  alt="Generic placeholder image"></a>  @item.userpubli.Nombre_Usuario
+                
+                                }else{
+                                     <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@item.userpubli.UserName" ><img class="mr-3 rounded" src="~/images/Feed/usernot.jpg"  width="45" height="45"  alt="Generic placeholder image"></a>  @item.userpubli.Nombre_Usuario
+                                } 
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">@item.DesTitle</h5>
@@ -87,6 +92,8 @@
                                     <a asp-action="LikePubli" asp-controller="PubliUsers" asp-route-idd="@item.idPubliUsers" class="btn btn-link ">Like it</a>
                                 }
                                 @item.FecPublic.ToString().Substring(0,10) @item.HorPublic.ToString().Substring(0,5) 
+                                    <a asp-action="Comentar" asp-controller="PubliUsers" asp-route-idd="@item.idPubliUsers" class="btn btn-default addComen-dialog-window ">Añadir Comentario</a>
+
                             </div>
                         </div>
                     }
@@ -96,74 +103,42 @@
     </div>
     @*<hr />*@
     <div class="row">
-        @*<form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserName" /> 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label asp-for="FirstName" class="control-label"></label>
-                    <input asp-for="FirstName" class="form-control" required />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div> 
-                <div class="form-group">
-                    <label asp-for="PhoneNumber" class="control-label"></label>
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-            </div> 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label asp-for="IsEnabled" class="control-label center-block"></label>
-                    <input asp-for="IsEnabled" class="form-control" />
-                    <span asp-validation-for="IsEnabled" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col col-sm-12 text-right">
-                <div class="form-group">
-                    <input type="submit" value="Guardar" class="btn btn-success" />
-                </div>
-            </div>
-        </form>*@
+ 
     </div>
 </div>
-
-<div class="modal" id="Edit" tabindex="-1" role="dialog">
+<div class="modal" id="AddComen" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Editar Información</h5>
+        <h5 class="modal-title">Crear publicación</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body"> 
-          <div class="teeeeEdit"></div>
+          <div class="teeeeComen"></div>
       </div>
       <div class="modal-footer"> 
       </div>
     </div>
   </div>
 </div>
+ 
 @section scripts{
 
 <script>
         
-      $("body").on("click", "a.edit-dialog-window", null, function (e) {
+     $("body").on("click", "a.addComen-dialog-window", null, function (e) {
             e.preventDefault();
             var $link = $(this);
             var url = $(this).attr('href');
             if (url.indexOf('#') == 0) {
-                $('#Edit').modal('show');
+                $('#AddComen').modal('show');
             }
             else {
                 $.get(url, function (data) {
-                    $('#Edit .teeeeEdit').html(data);
-                    $('#Edit').modal();
+                    $('#AddComen .teeeeComen').html(data);
+                    $('#AddComen').modal();
                 }).success(function () { $('input:text:visible:first').focus(); });
             }
         });

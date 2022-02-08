@@ -12,11 +12,20 @@
                     <div class="form-group">
                         <div class="input text">
                             <label  class="control-label"></label>
+                            <textarea asp-for="DesTitle" class="form-control" required ></textarea>
+                            <span asp-validation-for="DesTitle" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col col-sm-12">
+                    <div class="form-group">
+                        <div class="input text">
+                            <label  class="control-label"></label>
                             <textarea asp-for="DesPublic" class="form-control" required ></textarea>
                             <span asp-validation-for="DesPublic" class="text-danger"></span>
                         </div>
                     </div>
-                </div>    
+                </div>  
                 <br />
                 <div class="col col-sm-12 text-right">
                     <div class="form-group">

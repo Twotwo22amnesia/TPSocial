@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TelePSocial.Areas.Identity.Data;
 using TelePSocial.Entidades;
+using TelePSocial.Entidades.PR;
 
 namespace TelePSocial.Data
 {
@@ -26,6 +27,7 @@ namespace TelePSocial.Data
             builder.Entity<PubliUsers>().ToTable("PubliUsers");
             builder.Entity<LikesPublics>().ToTable("LikesPublics");
             builder.Entity<CommentUsers>().ToTable("CommentUsers");
+            builder.Entity<usp_AspNetUsers>().ToTable("usp_AspNetUsers");
             
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
@@ -35,7 +37,9 @@ namespace TelePSocial.Data
         public DbSet<PubliUsers> PubliUsers { get; set; }
         public DbSet<LikesPublics> LikesPublics { get; set; }
         public DbSet<CommentUsers> CommentUsers { get; set; }
+        public DbSet<usp_AspNetUsers> usp_AspNetUsers { get; set; }
         
+
 
 
     }

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TelePSocial.Entidades.PR.usp_AspNetUsers>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col col-md-4 text-center" ></div>
+            <div class="card" style="width: 18rem;">
+               @if (!string.IsNullOrEmpty(item.PhotoPerfil))
+                {
+                    <img class="card-img-top"  src=@Url.Content(item.DesImage)   alt="Generic placeholder image">  
+                
+                }else{
+                    <img class="card-img-top"  src="~/images/Feed/usernot.jpg"   alt="Generic placeholder image"> 
+                } 
+              <div class="card-body">
+                <h5 class="card-title">@item.Nombre_Usuario</h5> 
+                <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@item.UserName" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div> 
+        </div>  
+    }
+</div>
+

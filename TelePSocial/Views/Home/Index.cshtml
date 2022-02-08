@@ -21,12 +21,20 @@
                 @if(Model.Count() != 0){
                     @foreach(var item in Model)
                     {
+                        <br />
+                        <br />
                         <div class="card text-left">
-                            <div class="card-header">
-                                @item.IdUser
+                            <div class="card-header headerPubli">
+                                @if (!string.IsNullOrEmpty(item.userpubli.PhotoPerfil))
+                                {
+                                     <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@item.userpubli.UserName" ><img class="mr-3 rounded" src=@Url.Content(item.userpubli.DesImage)  width="45" height="45"  alt="Generic placeholder image"></a>  @item.userpubli.Nombre_Usuario
+                
+                                }else{
+                                     <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@item.userpubli.UserName" ><img class="mr-3 rounded" src="~/images/Feed/usernot.jpg"  width="45" height="45"  alt="Generic placeholder image"></a>  @item.userpubli.Nombre_Usuario
+                                } 
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
+                                <h5 class="card-title">@item.DesTitle</h5>
                                 <p class="card-text">@item.DesPublic .</p>
                             </div>
                             <section>
@@ -36,10 +44,10 @@
                                         <li class="media" style="background: #F5F7FA;">
                                             @if (!string.IsNullOrEmpty(items.photo))
                                             {
-                                                <a asp-action="verPerfil" asp-controller="User" ><img class="mr-3" src=@Url.Content(items.desPhoto)  width="30" height="30"  alt="Generic placeholder image"></a> 
+                                                <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@items.username" ><img class="mr-3" src=@Url.Content(items.desPhoto)  width="30" height="30"  alt="Generic placeholder image"></a> 
                 
                                             }else{
-                                                <a asp-action="verPerfil" asp-controller="User" ><img class="mr-3" src="~/images/Feed/usernot.jpg"  width="30" height="30"  alt="Generic placeholder image"></a> 
+                                                <a asp-action="verPerfil" asp-controller="User" asp-route-idd="@items.username" ><img class="mr-3" src="~/images/Feed/usernot.jpg"  width="30" height="30"  alt="Generic placeholder image"></a> 
                                             } 
                                             <div class="media-body">
                                                 <h5 class="mt-0 mb-1">@items.usuario</h5>
@@ -60,6 +68,8 @@
 
                             </div>
                         </div>
+                        <br />
+                        <br />
                     }
                 } 
             </div> 
